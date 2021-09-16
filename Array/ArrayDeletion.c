@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include <stdio.h>
 
 void display(int arr[], int size)
 {
@@ -8,28 +8,31 @@ void display(int arr[], int size)
     }
 }
 
-
-void delete(int arr[], int size,int index)
+void delete (int arr[], int size, int index)
 {
-    if (size >= index)
+
+    for (int i = index; i < size - 1; i++)
     {
-        printf("no index found");
+        arr[i] = arr[i + 1];
     }
-    for (int i = index; i<size-1; i++)
-    {
-        arr[i]=arr[i+1];
-    }
-        // arr[index]=
+    // arr[index]=
 }
 
 int main()
 {
-      int arr[100] = {1, 2, 3, 5, 7, 9};
-    int size = 6;
-    int  index = 3;
-    delete(arr,size,index);
-    size-=1;
-    display(arr, size);
-return 0;
+    int arr[] = {1, 2, 3, 5, 7, 9};
+    int size = sizeof(arr) / sizeof(int);
+    int index = 5;
+    if (size <= index)
+    {
+        printf("no index found\n");
+    }
+    else
+    {
+        delete (arr, size, index);
+        size -= 1;
+    }
 
+    display(arr, size);
+    return 0;
 }
