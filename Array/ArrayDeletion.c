@@ -15,7 +15,7 @@ void delete (int arr[], int size, int index)
     {
         arr[i] = arr[i + 1];
     }
-    // arr[index]=
+   
 }
 
 int main()
