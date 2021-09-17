@@ -27,6 +27,32 @@ struct Node *insertAtFirst(struct Node *head,int data){
     head=ptr;
     return head;
 }
+struct Node *insertAtIndex(struct Node *head,int data,int index){
+
+    struct Node *temp=head;
+   
+    struct Node * ptr=(struct Node*)malloc(sizeof(struct Node));
+    ptr->data=data;
+   int i=0;
+   if (index==0)
+   {
+       head=insertAtFirst(head,data);
+       return head;
+   }
+   else
+   {
+       while (i!=index-1)
+       {
+       
+      
+       }
+    
+
+   
+   }
+   
+   return head;
+}
 
 int main()
 {
@@ -59,7 +85,8 @@ int main()
     printf("Traverse the list :\n");
     taversal(head);
     printf("\ninset at the list :\n");
-    head=insertAtFirst(head,43);
+    // head=insertAtFirst(head,43);
+    head=insertAtIndex(head,43,2);
       taversal(head);
 
     return 0;

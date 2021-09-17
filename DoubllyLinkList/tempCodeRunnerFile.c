@@ -1,0 +1,1 @@
+  ptr->next=temp2->prev;
