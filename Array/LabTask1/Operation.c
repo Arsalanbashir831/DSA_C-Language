@@ -148,11 +148,11 @@ void searchByVal(int arr[], int s)
     }
     if (flag == 1)
     {
-        printf("%d is found at index %d\n", data, index);
+        printf("%d is found at index %d\n", data, index);  // print the searched data
     }
     else
     {
-        printf("Enter the valid element \n");
+        printf("Enter the valid element \n"); // if element not found in an array
     }
 }
 int delByVal(int arr[], int s)
