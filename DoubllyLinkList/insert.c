@@ -43,28 +43,37 @@ struct Node *insertAtIndex(struct Node *head,int data,int index){
    {
        while (i!=index-1)
        {
-       
-      
+              temp=temp->next;
+              i++;      
        }
-    
-
+        ptr->prev=temp;
+        ptr->next=temp->next;
+        temp->next=ptr;
+        ptr->next->prev=ptr;
+return head;
    
    }
    
    return head;
 }
-
+struct Node * insertAtEnd(struct Node *tail,int data){
+      struct Node * ptr=(struct Node*)malloc(sizeof(struct Node));
+    ptr->data=data;
+    tail->next=ptr;
+    ptr->prev=tail;
+    tail=ptr;
+}
 int main()
 {
     struct Node *head;
     struct Node *second;
     struct Node *third;
-    struct Node *fourth;
+    struct Node *tail;
 
     head = (struct Node *)malloc(sizeof(struct Node));
     second = (struct Node *)malloc(sizeof(struct Node));
     third = (struct Node *)malloc(sizeof(struct Node));
-    fourth = (struct Node *)malloc(sizeof(struct Node));
+    tail = (struct Node *)malloc(sizeof(struct Node));
 
     head->data = 4;
     head->prev = NULL;
@@ -76,17 +85,18 @@ int main()
 
     third->data = 78;
     third->prev = second;
-    third->next = fourth;
+    third->next = tail;
 
-    fourth->data = 90;
-    fourth->prev = third;
-    fourth->next = NULL;
+    tail->data = 90;
+    tail->prev = third;
+    tail->next = NULL;
 
     printf("Traverse the list :\n");
     taversal(head);
     printf("\ninset at the list :\n");
     // head=insertAtFirst(head,43);
     head=insertAtIndex(head,43,2);
+     tail=insertAtEnd(tail,54);
       taversal(head);
 
     return 0;
