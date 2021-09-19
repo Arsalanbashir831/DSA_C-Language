@@ -61,6 +61,7 @@ void main()
             break;
         }
     } while (choice != 0);
+    return 0;
 }
 void insert(int arr[], int s)
 {
