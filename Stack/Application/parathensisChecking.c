@@ -86,7 +86,7 @@ if (isEmpty())
 }
 else
 {
-    printf("Unbalanced");
+    printf("Brackets are Unbalanced");
 }
 
     return 0;
