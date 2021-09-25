@@ -78,6 +78,16 @@ int main()
         {
             pop();
         }
+       else if (str->arr[i]=='[')
+        {
+            push('[');
+        }
+        
+       else if (str->arr[i]==']')
+        {
+            pop();
+        }
+        
     }
     
 if (isEmpty())
