@@ -55,13 +55,13 @@ int main()
     head->data = 46;
     head->next = second;
 
-    second->data = 11;
+    second->data = 31;
     second->next = third;
 
-    third->data = 48;
+    third->data = 148;
     third->next = fourth;
 
-    fourth->data = 10;
+    fourth->data = 100;
     fourth->next = NULL;
     head = sort(head);
     taversal(head);
