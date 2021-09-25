@@ -66,7 +66,7 @@ int main()
     str->size = 100;
     str->top = -1;
     str->arr = (char *)malloc(str->size * sizeof(char));
-    printf("Enter the Expression  :  ");
+    printf("Enter the Mathematical Expression to check the brackets  :  ");
     gets(str->arr);
     for (int i = 0; i < str->size; i++)
     {
