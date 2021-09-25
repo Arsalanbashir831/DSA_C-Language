@@ -51,7 +51,7 @@ void push(char data){
 int pop(){
     if (isEmpty())
     {
-        printf("Stack is Empty");
+        return -1;
     }
     else{
         int val=str->arr[str->top];
