@@ -69,9 +69,6 @@ int main()
     push(4);
     push(1);
     push(2);
-    push(3);
-    push(7);
-    pop();
     display();
     
     // str->arr[0]=4;
