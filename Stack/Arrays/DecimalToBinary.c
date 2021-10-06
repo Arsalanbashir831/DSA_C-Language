@@ -1,90 +1,64 @@
 #include <stdio.h>
-#include <stdlib.h>
-
-struct Stack
+#include <conio.h>
+#define MAX 100
+//declaring stack using structure
+typedef struct stack
 {
-    int size;
+    int data[MAX];
     int top;
-    int *arr;
-};
-
-void display(struct Stack *str){
-    for (int i = 0; i <= str->top; i++)
-    {
-        
-             printf("%d  ",str->arr[i]);
-    }
-    
-}
-int isEmpty(struct Stack *str)
+} stack;
+//checking whether the stack is empty or not
+int empty(stack *s)
 {
-    if (str->top == -1)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
+    if (s->top == -1)
+        return (1);
+    return (0);
 }
-int isFull(struct Stack *str)
+//checking whether the stack is full or not
+int full(stack *s)
 {
-    if (str->top == str->size - 1)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
+    if (s->top == MAX - 1)
+        return (1);
+    return (0);
 }
-void push(struct Stack *str,int data){
-    if (isFull(str))
-    {
-        printf("Stack is full");
-    }
-    else{
-        str->top++;
-        str->arr[str->top]=data;
-    }
+//to push the remainder into the stack
+void push(stack *s, int x)
+{
+    s->top = s->top + 1;
+    s->data[s->top] = x;
 }
-int pop(struct Stack *str){
-    if (isEmpty(str))
-    {
-        printf("Stack is Empty");
-    }
-    else{
-        int val=str->arr[str->top];
-        str->top=str->top-1;
-        return val;
-    }
-    
+//to pop the remainder out from the stack
+int pop(stack *s)
+{
+    int x;
+    x = s->data[s->top];
+    s->top = s->top - 1;
+    return (x);
 }
-void decimalToBinary(int value,struct Stack *str){
-    str->top=-1;
-    int rem=0;
-    while (value!=0)
-    {
-        rem=value%2;
-        push(str,rem);
-        value/2;
-      
-    }
 
-    while(str->top!=-1)
-   {
-       printf("%d",pop(str));
-   }
-   
-}
 int main()
 {
-  struct Stack* str = (struct Stack *) malloc(sizeof(struct Stack));
-    str->size = 100;
-    str->top = -1;
-    str->arr=(int *)malloc(str->size*sizeof(int));
-   decimalToBinary(10,str);
-   
-    
-    return 0;
+    stack s; //structure member variable
+    int num;
+    s.top = -1; //top pointer initialized with -1
+    printf("Enter a decimal number:");
+    scanf("%d", &num);
+    while ((num != 0))
+    {
+        if (!full(&s)) //this condition executes if the function 'full' returns 0
+        {
+            push(&s, num % 2); //pushing the remainder into the stack using 'push' function
+            num = num / 2;
+        }
+        else
+        {
+            printf("Stack overflow"); //if stack reaches the MAX value
+            exit(0);
+        }
+    }
+    while (!empty(&s))
+    {
+        num = pop(&s); //poping the remainder out from the stack using 'pop' function
+        printf("%d", num);
+    }
 }
