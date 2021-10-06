@@ -183,7 +183,7 @@ void InfixtoPrefix(char *exp){
 int main()
 {    
     printf("The infix is: ");
-    char expression[] = "((a/b)+c)-(d+(e*f))"; 
+    char expression[] = "(A(B-C*D-E)(F/G+H-E))^3"; 
     printf("%s\n",expression);
     InfixtoPrefix(expression); 
     printf("The prefix is: ");
