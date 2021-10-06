@@ -183,7 +183,7 @@ int eval_post(char *postfix)
                 temp = b * a;
                 break;
             case '/':
-                temp = b / a;
+                temp = b / a;//calac
                 break;
             }
             push(sp, temp); // pushing the numbers
