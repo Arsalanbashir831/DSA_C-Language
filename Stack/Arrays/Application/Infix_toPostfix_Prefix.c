@@ -205,32 +205,29 @@ void brackets(char* infix){
         i++;
     }
 }
-void *reverse(char *exp){
+char* reverse(char *exp){
 
     int size = strlen(exp);
-    int j = size, i=0;
+    int j = size-1, i=0;
     char temp[j];
-    temp[j--]='\0';
-    while(exp[i]!='\0')
+    temp[size]='\0';
+    while(i < size)
     {
         temp[j] = exp[i];
         j--;
         i++;
     }
     strcpy(exp,temp);
+    return exp;
 }
-void *InfixtoPrefix(char *exp){
- 
+char * InfixtoPrefix(char *exp){
     // reverse string
     reverse(exp);
     //change brackets
     brackets(exp);
-    //get postfix
-    infixToPostfix(exp);
-    // reverse string again
-    reverse(exp);
-
-   printf("%s",exp);
+    // reverse the postfix expression
+    return reverse(infixToPostfix(exp));
+    return exp;
 }
 
 int main()
@@ -242,9 +239,8 @@ int main()
     printf("Enter the value of the expression\n");
     gets(infix);
     printf("postfix is %s\n", infixToPostfix(infix));
-    InfixtoPrefix(infix);
+    printf("prefix is %s\n",InfixtoPrefix(infix));
     printf("Evaluated Expression : %d", eval_post(infixToPostfix(infix)));
-   
-
+    getch();
     return 0;
 }
