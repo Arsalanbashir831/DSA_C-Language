@@ -1,64 +1,94 @@
 #include <stdio.h>
-#include <conio.h>
-#define MAX 100
-//declaring stack using structure
-typedef struct stack
-{
-    int data[MAX];
-    int top;
-} stack;
-//checking whether the stack is empty or not
-int empty(stack *s)
-{
-    if (s->top == -1)
-        return (1);
-    return (0);
-}
-//checking whether the stack is full or not
-int full(stack *s)
-{
-    if (s->top == MAX - 1)
-        return (1);
-    return (0);
-}
-//to push the remainder into the stack
-void push(stack *s, int x)
-{
-    s->top = s->top + 1;
-    s->data[s->top] = x;
-}
-//to pop the remainder out from the stack
-int pop(stack *s)
-{
-    int x;
-    x = s->data[s->top];
-    s->top = s->top - 1;
-    return (x);
-}
+#include <stdlib.h>
 
+struct Stack
+{
+    int size;
+    int top;
+    int *arr;
+};
+struct Stack *str;
+
+int isEmpty()
+{
+    if (str->top == -1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+int isFull()
+{
+    if (str->top == str->size - 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+void push(int data){
+    if (isFull())
+    {
+        printf("Stack is full");
+        
+    }
+    else{
+        str->top++;
+        str->arr[str->top]=data;
+    }
+}
+int pop(){
+    if (isEmpty())
+    {
+        printf("Stack is Empty");
+    }
+    else{
+        int val=str->arr[str->top];
+        str->top=str->top-1;
+        return val;
+    }
+    
+}
+void decimalToBinary(int num){
+    int rem;
+     str = (struct Stack *) malloc(sizeof(struct Stack));
+    str->size = 100;
+    str->top = -1;
+    str->arr = (int *)malloc(str->size * sizeof(int));
+    
+    while (num!=0)
+    {
+        rem=num%2;
+        push(rem);
+        num = num/2;
+       
+    }
+     while (str->top!=-1)
+   {
+       printf("%d",pop());
+   }
+  
+}
 int main()
 {
-    stack s; //structure member variable
+    str = (struct Stack *) malloc(sizeof(struct Stack));
+    str->size = 100;
+    str->top = -1;
+    str->arr = (int *)malloc(str->size * sizeof(int));
     int num;
-    s.top = -1; //top pointer initialized with -1
-    printf("Enter a decimal number:");
-    scanf("%d", &num);
-    while ((num != 0))
-    {
-        if (!full(&s)) //this condition executes if the function 'full' returns 0
-        {
-            push(&s, num % 2); //pushing the remainder into the stack using 'push' function
-            num = num / 2;
-        }
-        else
-        {
-            printf("Stack overflow"); //if stack reaches the MAX value
-            exit(0);
-        }
-    }
-    while (!empty(&s))
-    {
-        num = pop(&s); //poping the remainder out from the stack using 'pop' function
-        printf("%d", num);
-    }
+    printf("Enter the decimal number");
+    scanf("%d",&num);
+    printf("Binary is : ");
+    decimalToBinary(num);
+ 
+
+  
+   
+
+    return 0;
 }
