@@ -54,17 +54,6 @@ int pop(){
     }
     
 }
-int power(int number, int power)
-{
-    int num=number;
-    for (int i = 1; i < power; i++)
-    {
-        number = number * num;
-    }
-
-    return number;
-    
-}
 int binaryToDecimal(char binary[])
 {
     str->top = -1;
@@ -91,7 +80,17 @@ int binaryToDecimal(char binary[])
        
     
 }
+int power(int number, int power)
+{
+    int temp = number;
+    for (int i = 1; i < power; i++)
+    {
+        number = number*temp;
+    }
 
+    return number;
+    
+}
 int main()
 {
      str = (struct Stack *) malloc(sizeof(struct Stack));
