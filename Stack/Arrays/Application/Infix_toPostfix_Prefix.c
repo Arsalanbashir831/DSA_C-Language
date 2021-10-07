@@ -1,151 +1,215 @@
-#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <conio.h>
 
-// A structure to represent a stack 
-struct Stack { 
-    int top; 
-    int maxSize;
-    // we are storing string in integer array, this will not give error
-    // as values will be stored in ASCII and returned in ASCII thus, returned as string again
-    int* array; 
-}; 
+struct stack
+{
+    int size;
+    int top;
+    char *arr;
+};
 
-struct Stack* create(int max) 
-{ 
-    struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack)); 
-    stack->maxSize = max; 
-    stack->top = -1; 
-    stack->array = (int*)malloc(stack->maxSize * sizeof(int));
-    return stack; 
-} 
+int stackTop(struct stack *sp)
+{
+    return sp->arr[sp->top];
+}
 
-// Checking with this function is stack is full or not
-// Will return true is stack is full else false 
-//Stack is full when top is equal to the last index 
-int isFull(struct Stack* stack) 
-{ 
-    if(stack->top == stack->maxSize - 1){
-        printf("Will not be able to push maxSize reached\n");
+int isEmpty(struct stack *ptr)
+{
+    if (ptr->top == -1)
+    {
+        return 1;
     }
-    // Since array starts from 0, and maxSize starts from 1
-    return stack->top == stack->maxSize - 1; 
-} 
-
-// By definition the Stack is empty when top is equal to -1 
-// Will return true if top is -1
-int isEmpty(struct Stack* stack) 
-{ 
-    return stack->top == -1; 
+    else
+    {
+        return 0;
+    }
 }
 
-// Push function here, inserts value in stack and increments stack top by 1
-void push(struct Stack* stack, int item) 
-{ 
-    if (isFull(stack)) 
-        return; 
-    stack->array[++stack->top] = item; 
+int isFull(struct stack *ptr)
+{
+    if (ptr->top == ptr->size - 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
-// Function to remove an item from stack.  It decreases top by 1 
-int pop(struct Stack* stack) 
-{ 
-    if (isEmpty(stack)) 
-        return INT_MIN; 
-    return stack->array[stack->top--]; 
-} 
-
-// Function to return the top from stack without removing it 
-int peek(struct Stack* stack) 
-{ 
-    if (isEmpty(stack)) 
-        return INT_MIN; 
-    return stack->array[stack->top]; 
-} 
-
-// A utility function to check if the given character is operand 
-int checkIfOperand(char ch) 
-{ 
-    return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'); 
-} 
-
-// Fucntion to compare precedence
-// If we return larger value means higher precedence 
-int precedence(char ch) 
-{ 
-    switch (ch) 
-    { 
-    case '+': 
-    case '-': 
-        return 1; 
-
-    case '*': 
-    case '/': 
-        return 2; 
-
-    case '^': 
-        return 3; 
-    } 
-    return -1; 
-} 
-
-// The driver function for infix to postfix conversion 
-int getPostfix(char* expression) 
-{ 
-    int i, j; 
-
-    // Stack size should be equal to expression size for safety  
-    struct Stack* stack = create(strlen(expression)); 
-    if(!stack) // just checking is stack was created or not  
-        return -1 ; 
-
-    for (i = 0, j = -1; expression[i]; ++i) 
-    { 
-        // Here we are checking is the character we scanned is operand or not
-        // and this adding to to output. 
-        if (checkIfOperand(expression[i])) 
-            expression[++j] = expression[i]; 
-
-        // Here, if we scan character ‘(‘, we need push it to the stack. 
-        else if (expression[i] == '(') 
-            push(stack, expression[i]); 
-
-        // Here, if we scan character is an ‘)’, we need to pop and print from the stack  
-        // do this until an ‘(‘ is encountered in the stack. 
-        else if (expression[i] == ')') 
-        { 
-            while (!isEmpty(stack) && peek(stack) != '(') 
-                expression[++j] = pop(stack); 
-            if (!isEmpty(stack) && peek(stack) != '(') 
-                return -1; // invalid expression              
-            else
-                pop(stack); 
-        } 
-        else // if an opertor
-        { 
-            while (!isEmpty(stack) && precedence(expression[i]) <= precedence(peek(stack))) 
-                expression[++j] = pop(stack); 
-            push(stack, expression[i]); 
-        } 
-
-    } 
-
-    // Once all inital expression characters are traversed
-    // adding all left elements from stack to exp
-    while (!isEmpty(stack)) 
-        expression[++j] = pop(stack); 
-
-    expression[++j] = '\0'; 
-    
+void push(struct stack *ptr, char val)
+{
+    if (isFull(ptr))
+    {
+        printf("Stack Overflow! Cannot push %d to the stack\n", val);
+    }
+    else
+    {
+        ptr->top++;
+        ptr->arr[ptr->top] = val;
+    }
 }
 
-void reverse(char *exp){
+char pop(struct stack *ptr)
+{
+    if (isEmpty(ptr))
+    {
+       
+        return -1;
+    }
+    else
+    {
+        char val = ptr->arr[ptr->top];
+        ptr->top--;
+        return val;
+    }
+}
+int precedence(char ch)
+{
+    if (ch == '*' || ch == '/')
+        return 3;
+    else if (ch == '+' || ch == '-')
+        return 2;
+    else
+        return 0;
+}
+
+int isOperator(char ch)
+{
+    if (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '(' || ch == ')')
+        return 1;
+    else
+        return 0;
+}
+char *infixToPostfix(char *infix)
+{
+    struct stack *sp = (struct stack *)malloc(sizeof(struct stack));
+    sp->size = 10;
+    sp->top = -1;
+    sp->arr = (char *)malloc(sp->size * sizeof(char));
+    char *postfix = (char *)malloc((strlen(infix) + 1) * sizeof(char));
+    int i = 0; // Track infix traversal
+    int j = 0; // Track postfix addition
+    while (infix[i] != '\0')
+    {
+        if (!isOperator(infix[i]))
+        {
+            postfix[j] = infix[i];
+            j++;
+            i++;
+        }
+        
+        else if (infix[i] == '(')
+        {
+            push(sp, infix[i]);
+            i++;
+        }
+        else if (infix[i] == ')')
+        {
+            char temp;
+            while (1)
+            {
+                temp = pop(sp);
+                if (temp == '(')
+                {
+                    break;
+                }
+                else
+                {
+                    postfix[j] = temp;
+                    j++;
+                }
+            }
+            i++;
+        }
+
+        else if (precedence(infix[i]) > precedence(stackTop(sp)))
+        {
+            push(sp, infix[i]);
+            i++;
+        }
+
+        else
+        {
+            postfix[j] = pop(sp);
+            j++;
+        }
+    }
+    while (!isEmpty(sp))
+    {
+        postfix[j] = pop(sp);
+        j++;
+    }
+    postfix[j] = '\0';
+    return postfix;
+}
+
+int eval_post(char *postfix)
+{
+    int a, b, result;
+    int temp;
+    struct stack *sp = (struct stack *)malloc(sizeof(struct stack));
+    sp->size = 10;
+    sp->top = -1;
+    sp->arr = (char *)malloc(sp->size * sizeof(char));
+
+    for (int i = 0; i < strlen(postfix); i++)
+    {
+        if (postfix[i] <= '9' && postfix[i] >= '0')
+        {
+            push(sp, postfix[i] - '0'); 
+            /* we saw an operand,push the digit onto stack
+             postfix[i] - '0' is used for getting digit rather than ASCII code of digit */
+        }
+        else
+        {
+            /* we saw an operator
+* pop top element A and next-to-top elemnet B
+* from stack and compute B operator A
+*/
+            a = pop(sp);
+            b = pop(sp);
+            switch (postfix[i])
+            {
+
+            case '+':
+                temp = b + a;
+                break;
+            case '-':
+                temp = b - a;
+                break;
+            case '*':
+                temp = b * a;
+                break;
+            
+            case '/':
+                temp = b / a;
+                break;
+            }
+            push(sp, temp); // pushing the numbers
+        }
+    }
+    result = pop(sp); //store the evaluated ans in the result
+    return result;
+}
+void brackets(char* infix){
+    int i = 0;
+    while(infix[i]!='\0')
+    {
+        if(infix[i]=='(')
+            infix[i]=')';
+        else if(infix[i]==')')
+            infix[i]='(';
+        i++;
+    }
+}
+void *reverse(char *exp){
 
     int size = strlen(exp);
     int j = size, i=0;
-    char temp[size];
-
+    char temp[j];
     temp[j--]='\0';
     while(exp[i]!='\0')
     {
@@ -155,40 +219,32 @@ void reverse(char *exp){
     }
     strcpy(exp,temp);
 }
-void brackets(char* exp){
-    int i = 0;
-    while(exp[i]!='\0')
-    {
-        if(exp[i]=='(')
-            exp[i]=')';
-        else if(exp[i]==')')
-            exp[i]='(';
-        i++;
-    }
-}
-void InfixtoPrefix(char *exp){
-
-    int size = strlen(exp);
-
+void *InfixtoPrefix(char *exp){
+ 
     // reverse string
     reverse(exp);
     //change brackets
     brackets(exp);
     //get postfix
-    getPostfix(exp);
+    infixToPostfix(exp);
     // reverse string again
     reverse(exp);
+
+   printf("%s",exp);
 }
 
 int main()
-{    
-    printf("The infix is: ");
-    char expression[] = "(A(B-C*D-E)(F/G+H-E))^3"; 
-    printf("%s\n",expression);
-    InfixtoPrefix(expression); 
-    printf("The prefix is: ");
-    printf("%s\n",expression);
-    
-    
-    return 0; 
+{
+
+    char infix[50] = "";
+    char *postfix;
+    postfix = infixToPostfix(infix);
+    printf("Enter the value of the expression\n");
+    gets(infix);
+    printf("postfix is %s\n", infixToPostfix(infix));
+    InfixtoPrefix(infix);
+    printf("Evaluated Expression : %d", eval_post(infixToPostfix(infix)));
+   
+
+    return 0;
 }

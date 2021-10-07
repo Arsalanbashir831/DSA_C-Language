@@ -194,7 +194,6 @@ int eval_post(char *postfix)
     result = pop(sp); //store the evaluated ans in the result
     return result;
 }
-
 int main()
 {
 
