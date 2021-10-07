@@ -56,7 +56,7 @@ char pop(struct stack *ptr)
 {
     if (isEmpty(ptr))
     {
-        printf("Stack Underflow! Cannot pop from the stack\n");
+       
         return -1;
     }
     else
@@ -100,6 +100,7 @@ char *infixToPostfix(char *infix)
             j++;
             i++;
         }
+        
         else if (infix[i] == '(')
         {
             push(sp, infix[i]);
@@ -182,6 +183,7 @@ int eval_post(char *postfix)
             case '*':
                 temp = b * a;
                 break;
+            
             case '/':
                 temp = b / a;
                 break;
