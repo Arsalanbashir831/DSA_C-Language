@@ -188,9 +188,7 @@ int main()
     InfixtoPrefix(expression); 
     printf("The prefix is: ");
     printf("%s\n",expression);
-    printf("Postfix is :  ");
-    getPostfix(expression);
-    printf("%s\n",expression);
+    
     
     return 0; 
 }
