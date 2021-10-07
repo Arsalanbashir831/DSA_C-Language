@@ -56,7 +56,7 @@ char pop(struct stack *ptr)
 {
     if (isEmpty(ptr))
     {
-       
+
         return -1;
     }
     else
@@ -100,7 +100,7 @@ char *infixToPostfix(char *infix)
             j++;
             i++;
         }
-        
+
         else if (infix[i] == '(')
         {
             push(sp, infix[i]);
@@ -159,7 +159,7 @@ int eval_post(char *postfix)
     {
         if (postfix[i] <= '9' && postfix[i] >= '0')
         {
-            push(sp, postfix[i] - '0'); 
+            push(sp, postfix[i] - '0');
             /* we saw an operand,push the digit onto stack
              postfix[i] - '0' is used for getting digit rather than ASCII code of digit */
         }
@@ -183,7 +183,7 @@ int eval_post(char *postfix)
             case '*':
                 temp = b * a;
                 break;
-            
+
             case '/':
                 temp = b / a;
                 break;
@@ -194,33 +194,36 @@ int eval_post(char *postfix)
     result = pop(sp); //store the evaluated ans in the result
     return result;
 }
-void brackets(char* infix){
+void brackets(char *infix)
+{
     int i = 0;
-    while(infix[i]!='\0')
+    while (infix[i] != '\0')
     {
-        if(infix[i]=='(')
-            infix[i]=')';
-        else if(infix[i]==')')
-            infix[i]='(';
+        if (infix[i] == '(')
+            infix[i] = ')';
+        else if (infix[i] == ')')
+            infix[i] = '(';
         i++;
     }
 }
-char* reverse(char *exp){
+char *reverse(char *exp)
+{
 
     int size = strlen(exp);
-    int j = size-1, i=0;
+    int j = size - 1, i = 0;
     char temp[j];
-    temp[size]='\0';
-    while(i < size)
+    temp[size] = '\0';
+    while (i < size)
     {
         temp[j] = exp[i];
         j--;
         i++;
     }
-    strcpy(exp,temp);
+    strcpy(exp, temp);
     return exp;
 }
-char * InfixtoPrefix(char *exp){
+char *InfixtoPrefix(char *exp)
+{
     // reverse string
     reverse(exp);
     //change brackets
@@ -232,15 +235,38 @@ char * InfixtoPrefix(char *exp){
 
 int main()
 {
+    int choice;
 
-    char infix[50] = "";
-    char *postfix;
-    postfix = infixToPostfix(infix);
-    printf("Enter the value of the expression\n");
-    gets(infix);
-    printf("postfix is %s\n", infixToPostfix(infix));
-    printf("prefix is %s\n",InfixtoPrefix(infix));
-    printf("Evaluated Expression : %d", eval_post(infixToPostfix(infix)));
-    getch();
+    while (1)
+    {
+        char infix[50] = "";
+        char *postfix;
+        postfix = infixToPostfix(infix);
+        
+        printf("1-postfix\n2-prefix \t(-1 to exit)\n");
+        scanf("%d", &choice);
+        if (choice == 1)
+        {
+            printf("Enter the value of the expression\n");
+            gets(infix);
+            gets(infix);
+            printf("postfix is %s\n", infixToPostfix(infix));
+            printf("Evaluated Expression : %d\n", eval_post(infixToPostfix(infix)));
+        }
+        if (choice == 2)
+        {
+            printf("Enter the value of the expression\n");
+            gets(infix);
+            gets(infix);
+            printf("prefix is %s\n", InfixtoPrefix(infix));
+            printf("Evaluated Expression : %d\n", eval_post(infixToPostfix(infix)));
+        }
+
+        if (choice == -1)
+        {
+            break;
+        }
+    }
+
     return 0;
 }
