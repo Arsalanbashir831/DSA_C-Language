@@ -13,13 +13,12 @@ int main(int argc, char const *argv[])
     struct Array *arr = (struct Array *)malloc(sizeof(struct Array));
     int arr1Size = arr->size;
     int arr2Size = arr->size;
-
     int index = 0;
     // initializing the size of the arrays
-    arr->arr1 = (int *)malloc(arr->size * sizeof(int *));
-    arr->arr2 = (int *)malloc(arr->size * sizeof(int *));
+    arr->arr1 = (int *)malloc(arr->size * sizeof(int ));
+    arr->arr2 = (int *)malloc(arr->size * sizeof(int ));
     // the size of the resultant array would be the sum of the size of arr1 and arr2
-    arr->resultArray = (int *)malloc(arr->arr1[arr->size] + arr->arr2[arr->size] * sizeof(int *));
+    arr->resultArray = (int *)malloc(arr->arr1[arr->size] + arr->arr2[arr->size] * sizeof(int ));
 
     printf("Enter the size of the 1st array : ");
     scanf("%d", &arr1Size);
