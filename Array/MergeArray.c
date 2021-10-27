@@ -57,6 +57,7 @@ int main(int argc, char const *argv[])
     }
     printf("\n ==== Sorted resultant Array ======\n");
     int temp;
+    //sorting the resultant array
     for (int i = 0; i < resultSize; i++)
     {
         for (int j = 0; j < resultSize; j++)
@@ -69,6 +70,7 @@ int main(int argc, char const *argv[])
             }
         }
     }
+    //printing the array
     for (int i = 0; i < resultSize; i++)
     {
         printf("%d   ", arr->resultArray[i]);
