@@ -55,8 +55,9 @@ struct Node *insertAtEnd(struct Node *head, int data)
     return head;
 }
 
-struct Node *insertAfter(struct Node*head,int data,int index){
-      struct Node *ptr = (struct Node *)malloc(sizeof(struct Node));
+struct Node *insertAfter(struct Node *head, int data, int index)
+{
+    struct Node *ptr = (struct Node *)malloc(sizeof(struct Node));
     struct Node *p = head;
     int i = 0;
     while (i != index)
@@ -64,7 +65,7 @@ struct Node *insertAfter(struct Node*head,int data,int index){
         p = p->next;
         i++;
     }
-     ptr->data = data;
+    ptr->data = data;
     ptr->next = p->next;
     p->next = ptr;
     return head;
@@ -93,17 +94,54 @@ int main()
 
     fourth->data = 90;
     fourth->next = NULL;
-
+    int opt, num, index;
+    printf("By default value Before Insertion in linklist\n");
     taversal(head);
     printf("\n");
-    //insert  at first
-    head = insertAtFirst(head, 32);
-    //insert at between
-    head = insertAtIndex(head, 2, 90);
-    //insert at end
-    head = insertAtEnd(head, 921);
-   // insert after the given index
-    head=insertAfter(head,43,2);
-    taversal(head);
+    
+    
+    while (1)
+    {
+         printf("\n1-insert at first\n2-insert at index\n3-insert at end\n4-insert at after index\n5-display\n");
+        scanf("%d", &opt);
+        if (opt == 1)
+        {
+            printf("enter the value");
+            scanf("%d", &num);
+            head = insertAtFirst(head, num);
+        }
+        if (opt == 2)
+        {
+            printf("enter the value");
+            scanf("%d", &num);
+            printf("Enter the index");
+            scanf("%d", &index);
+            head = insertAtIndex(head, index, num);
+        }
+        if (opt == 3)
+        {
+            head = insertAtEnd(head, num);
+            printf("%d is inserted at end", num);
+        }
+        if (opt == 4)
+        {
+            printf("enter the value");
+            scanf("%d", num);
+            printf("Enter the index");
+            scanf("%d", &index);
+            head = insertAfter(head, num, index);
+            printf("%d is inserted after the %d", num, index);
+        }
+
+        if (opt == 5)
+        {
+            taversal(head);
+        }
+
+        if (opt == -1)
+        {
+            break;
+        }
+    }
     return 0;
 }
