@@ -24,7 +24,9 @@ void selectionSort(int *A, int n){
         temp = A[i];
         A[i] = A[indexOfMin];
         A[indexOfMin] = temp;
+        
     }
+    
 }
 
 int main(){
