@@ -126,7 +126,7 @@ int main()
         if (opt == 4)
         {
             printf("enter the value");
-            scanf("%d", num);
+            scanf("%d",&num);
             printf("Enter the index");
             scanf("%d", &index);
             head = insertAfter(head, num, index);
