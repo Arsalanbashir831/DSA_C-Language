@@ -138,6 +138,8 @@ printf("BY default our linklist \n");
    if (opt==5)
    {
 taversal(head);
+
+printf("\nNumber of nodes in the list : %d\n",counter(head));
    }
    
      
