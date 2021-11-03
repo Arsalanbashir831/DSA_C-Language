@@ -15,7 +15,16 @@ void taversal(struct Node *ptr)
         ptr = ptr->next;
     }
 }
-
+int counter (struct Node *ptr){
+    int i=0;
+     while (ptr != NULL)
+    {
+        printf("%d   ", ptr->data);
+        ptr = ptr->next;
+        i++;
+    }
+    return i;
+}
 struct Node *deleteAtFirst(struct Node *head)
 {
     struct Node *ptr = head;
@@ -92,16 +101,50 @@ int main()
 
     fourth->data = 90;
     fourth->next = NULL;
-
+printf("BY default our linklist \n");
     taversal(head);
     printf("\n");
-    //insert  at first
-    // head=deleteAtFirst(head);
-    //delete at given index
-    // head=deleteAtIndex(head,1);
-    //delete at last index
-    // head=deleteAtLast(head);
-    head = deleteByValue(head, 78);
-    taversal(head);
+    int opt,value,index;
+    printf("\n1-delete at first\n2-delete at any position\n3-delete by value\n4-delete last \n5-number of nodes\n6-display the list\n-1 to exit");
+   while (opt!=-1)
+   {
+       if (opt==1)
+       {
+           // delete  at first
+    head=deleteAtFirst(head);
+       }
+       if (opt==2)
+       {
+           printf("Enter the position");
+           scanf("%d",&index);
+          // delete at given index
+    head=deleteAtIndex(head,index);
+       }
+       if (opt==3)
+       {
+           //delete by value 
+           printf("Enter the value");
+           scanf("%d",value);
+             head = deleteByValue(head, 78);
+            
+       }
+       
+       if (opt==4)
+       {
+ // delete at last index
+    head=deleteAtLast(head);       }
+       
+   }
+   if (opt==5)
+   {
+taversal(head);
+   }
+   
+     
+
+    
+   
+    
+  
     return 0;
 }
