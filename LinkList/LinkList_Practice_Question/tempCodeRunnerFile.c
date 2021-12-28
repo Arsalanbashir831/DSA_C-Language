@@ -1,0 +1,1 @@
+ l1 = insertNode(l1, 7);
