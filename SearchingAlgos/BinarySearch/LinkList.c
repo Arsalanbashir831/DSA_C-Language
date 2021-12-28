@@ -22,7 +22,6 @@ struct Node *middle(struct Node *start, struct Node *last)
 
     struct Node *slow = start;
     struct Node *fast = start->next;
-
     while (fast != last)
     {
         fast = fast->next;
