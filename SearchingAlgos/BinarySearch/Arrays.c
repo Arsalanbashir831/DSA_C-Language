@@ -40,6 +40,6 @@ int main()
     printf("Enter the data to search : ");
     int data;
     scanf("%d", &data);
-    Search(arr, data);
+    Search(arr,size,data);
     return 0;
 }
