@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 
 struct node
 {
@@ -47,48 +47,30 @@ void inOrder(struct node *root)
         inOrder(root->right);
     }
 }
-// checking if the tree is the BST
-int isBST(struct node *root)
-{
-    static struct node *prev = NULL;
-    if (root != NULL)
-    {
-        if (!isBST(root->left))
-        {
-            return 0;
-        }
-        if (prev != NULL && root->data <= prev->data)
-        {
-            return 0;
-        }
-        prev = root;
-        return isBST(root->right);
-    }
-    else
-    {
-        return 1;
-    }
-}
+
 // search Node in BST
 struct node *searchIter(struct node *root, int key)
 {
-    while (root != NULL)
+    struct node *ptr=root;
+    while (ptr != NULL)
     {
-        if (key == root->data)
+        if (key == ptr->data)
         {
+            printf("  %d  FOUND ",ptr->data);
             return root;
         }
-        else if (key < root->data)
+        else if (key < ptr->data)
         {
-            root = root->left;
+            ptr = ptr->left;
         }
         else
         {
-            root = root->right;
+            ptr = ptr->right;
         }
     }
-    return NULL;
+    return root;
 }
+
 // inset node in BST
 void insert(struct node *root, int key)
 {
@@ -121,41 +103,37 @@ void insert(struct node *root, int key)
         prev->right = new;
     }
 }
-struct node *inOrderPre(struct node *root)
-{
-    root = root->left;
-    while (root->right != NULL)
-    {
-        root = root->right;
-    }
-    return root;
-}
 
-struct node *inOrderPost(struct node *root)
-{
-    root = root->left;
-    while (root->left != NULL)
-    {
-        root = root->left;
-    }
-    return root;
-}
 
-// Delete Node in tree using InorderPrePredecessors
+
+
+int findSmallest(struct node *root)
+{
+    struct node* ptr = root;
+    while (ptr->left != NULL)
+    {
+        ptr = ptr->left;
+    }
+    return ptr->data;
+    
+}
+int findLargest(struct node *root)
+{
+    struct node* ptr = root;
+    while (ptr->right != NULL)
+    {
+        ptr = ptr->right;
+    }
+    return ptr->data;
+    
+}
 struct node *deleteNode(struct node *root, int key)
 {
-    struct node *iPre = NULL;
     if (root == NULL)
     {
-        return NULL;
+        return root;
     }
-    if (root->left == NULL && root->right == NULL)
-    {
-        free(root);
-        return NULL;
-    }
-    // search the node
-    if (key < root->data)
+    else if (key < root->data)
     {
         root->left = deleteNode(root->left, key);
     }
@@ -163,90 +141,76 @@ struct node *deleteNode(struct node *root, int key)
     {
         root->right = deleteNode(root->right, key);
     }
-    // Deletion strategy
     else
     {
-        iPre = inOrderPre(root);
-        root->data = iPre->data;
-        root->left = deleteNode(root->left, iPre->data);
+        if (root->left == NULL)
+        {
+            struct node *temp;
+            temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if (root->left != NULL)
+        {
+            struct node *temp;
+            temp = root->left;
+            free(root);
+            return temp;
+        }
+        struct node *temp;
+        temp->data= findSmallest(root->right);
+        root->data = temp->data;
+        root->right = deleteNode(root->right, temp->data);
     }
-    return root;
 }
+// int  findLargest(struct node *root){
+//     struct node *ptr=root;
+//     while (ptr->left!=NULL&&ptr!=NULL)
+//     {   
+//         ptr=ptr->left;
+//     }
+//     int large=ptr->data;
+//     return large;
+// }
 
-// Delete Node in tree using InorderPostPredecessors
-struct node *deleteNodePost(struct node *root, int key)
-{
-    struct node *iPost = NULL;
-    if (root == NULL)
-    {
-        return NULL;
-    }
-    if (root->left == NULL && root->right == NULL)
-    {
-        free(root);
-        return NULL;
-    }
-    // search the node
-    if (key < root->data)
-    {
-        root->left = deleteNodePost(root->left, key);
-    }
-    else if (key > root->data)
-    {
-        root->right = deleteNodePost(root->right, key);
-    }
-    // Deletion strategy
-    else
-    {
-        iPost = inOrderPost(root);
-        root->data = iPost->data;
-        root->right = deleteNodePost(root->right, iPost->data);
-    }
-    return root;
-}
 
 int main()
 {
-
     struct node *root = NULL;
-    int data;
-    printf("Enter the root data :");
-    scanf("%d", &data);
-    root = createNode(data);
-    while (1)
-    {
-        printf("Enter the data : ");
-        scanf("%d", &data);
-        if (data == -1)
-        {
-            break;
-        }
-        insert(root, data);
-    }
+    // hardcoded values 
+    root = createNode(40);
+   insert(root,10);
+   insert(root,65);
+   insert(root,25);
+   insert(root,90);
+   insert(root,5);
+   insert(root,34);
+   insert(root,20);
+   insert(root,110);
+   insert(root,15);
+//part A
+    deleteNode(root,25);
+    deleteNode(root,90);
+    //part B
     printf("\n====InOrder Traversal====\n");
     inOrder(root);
     printf("\n====PostOrder Traversal====\n");
     postOrder(root);
     printf("\n====PreOrder Traversal====\n");
     preOrder(root);
-    if (isBST(root) == 1)
-    {
-        printf("\nit is BST\n");
-    }
-    else
-    {
-        printf("\nIt is not BST\n");
-    }
-    // deletion using inorderPrePredessors
-    printf("Enter the data to delete to node :");
-    scanf("%d", &data);
-    root = deleteNode(root, data);
-    printf("\n");
+
+   
+    // part d
+    insert(root,45);
+    insert(root,100);
+    printf("\nTraversal After insertion of 45 and 100\n");
     inOrder(root);
-    // deletion using inorderPostPredessors
-    printf("Enter the data to delete to node :");
-    scanf("%d", &data);
-    root = deleteNodePost(root, data);
-    printf("\n");
-    inOrder(root);
+     //part c 
+    printf("\nSearching For 45\n");
+    root = searchIter(root,45);
+    //Part d
+printf("\nlargest : %d",findLargest(root));    
+printf("\nSmallest : %d",findSmallest(root));    
+    
+    return 0;
 }
