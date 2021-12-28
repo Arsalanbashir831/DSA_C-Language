@@ -18,6 +18,7 @@ int Search(int arr[], int size, int element)
         mid = (low + high) / 2;
         if (arr[mid] == element)
         {
+            printf("%d founded",element);
             return mid;
         }
         if (arr[mid] < element)
@@ -31,7 +32,7 @@ int Search(int arr[], int size, int element)
     }
     return -1;
 }
-}
+
 int main()
 {
     int arr[100] = {1, 2, 3, 5, 7, 9};
