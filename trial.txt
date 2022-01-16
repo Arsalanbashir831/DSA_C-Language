@@ -1,1 +1,2 @@
-avca
+avca push ka phir dekh lena jo conflic na kare ok
+what is the shortcut of commit ctrl alt c
